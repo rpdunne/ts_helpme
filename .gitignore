@@ -1,0 +1,30 @@
+# my files #
+############
+*.pyc
+*.log
+logs/*
+data/*
+.idea*
+.ipynb_checkpoints*
+data
+.venv
+.vscode
+
+env/*
+dist/*
+
+# messy notebook
+untitled.ipynb
+
+# Visual Studio code coverage results
+*.coverage
+*.coveragexml
+
+# Project's xml-files
+*.xml
+
+# old code
+asd/advanced_sand_build.py
+
+*pptx
+*pdf

@@ -1,0 +1,49 @@
+# Run code quality tests
+# https://aka.ms/yaml
+
+name: CI Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+
+      - name: Install dependencies
+        run: |
+          pip install pre-commit
+          poetry install
+
+      - name: Linting check
+        run: pre-commit run --all-files
+
+      - name: Run tests
+        run: |
+          poetry run pytest --junitxml=pytest-junit.xml --cov=tshelpme --cov-report=xml --cov-report=term
+
+      - name: Publish pytest XML results
+        uses: actions/upload-artifact@v2
+        with:
+          name: pytest-results
+          path: pytest-junit.xml
+
+      - name: Publish code coverage results
+        uses: actions/upload-artifact@v2
+        with:
+          name: code-coverage
+          path: coverage.xml
